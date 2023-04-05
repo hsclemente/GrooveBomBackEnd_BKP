@@ -17,12 +17,12 @@ import lombok.NoArgsConstructor;
 public class Banda {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = true)
     private Long id;
 
-    @Column(name = "nome", nullable = false)
+    @Column(name = "nome", nullable = true)
     private String nome;
 
-    @Column(name = "saldo", nullable = false)
+    @Column(name = "saldo", nullable = true)
     private Double saldo;
 }

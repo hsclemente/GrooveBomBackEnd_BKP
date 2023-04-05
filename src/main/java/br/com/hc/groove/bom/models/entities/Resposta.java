@@ -4,10 +4,12 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -21,16 +23,17 @@ import lombok.NoArgsConstructor;
 public class Resposta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = true)
     private Long id;
 
-    @Column(name = "resposta", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "resposta", nullable = true, columnDefinition = "TEXT")
     private String resposta;
 
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_resposta")
     private Usuario usuarioResposta;
 
-    @Column(name = "data", nullable = false)
+    @Column(name = "data", nullable = true)
     private LocalDateTime data;
 
     @PrePersist

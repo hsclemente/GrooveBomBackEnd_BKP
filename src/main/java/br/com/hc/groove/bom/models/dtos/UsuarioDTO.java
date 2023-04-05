@@ -1,15 +1,15 @@
 package br.com.hc.groove.bom.models.dtos;
 
-import br.com.hc.groove.bom.models.entities.Banda;
-import lombok.Value;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
-@Value
-public class UsuarioDTO {
-    private Long id;
-    private String nome;
-    private String descricao;
-    private String especialidade;
-    private String email;
-    private Double saldo;
-    private Banda banda;
-}
+public record UsuarioDTO (
+    Long id,
+    @NotBlank(message = "O usuario deve conter um nome")
+    String nome,
+    String descricao,
+    String especialidade,
+    @NotBlank(message = "O usuario deve conter um email")@Email
+    String email,
+    Double saldo
+){}

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.hc.groove.bom.models.forms.UsuarioForm;
+import br.com.hc.groove.bom.models.dtos.UsuarioDTO;
 import br.com.hc.groove.bom.services.UsuarioService;
 import jakarta.persistence.NoResultException;
 import jakarta.validation.Valid;
@@ -38,7 +38,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<?> criarUsuario(@RequestBody @Valid UsuarioForm usuario) {
+    public ResponseEntity<?> criarUsuario(@RequestBody @Valid UsuarioDTO usuario) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.criarUsuario(usuario));
         } catch (Exception ex1) {
@@ -48,7 +48,7 @@ public class UsuarioController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> alterarUsuario(@RequestBody UsuarioForm usuario, @PathVariable("id") Long usuarioId) {
+    public ResponseEntity<?> alterarUsuario(@RequestBody UsuarioDTO usuario, @PathVariable("id") Long usuarioId) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.alterarUsuario(usuario, usuarioId));
         } catch (Exception ex1) {
@@ -57,8 +57,8 @@ public class UsuarioController {
         }
     }
 
-    @PatchMapping("{id}")
-    public ResponseEntity<?> alterarSaldo(@RequestBody UsuarioForm usuario, @PathVariable("id") Long usuarioId) {
+    @PatchMapping("{id}")//repensar
+    public ResponseEntity<?> alterarSaldo(@RequestBody UsuarioDTO usuario, @PathVariable("id") Long usuarioId) {
         try {
             return ResponseEntity.ok("");
         } catch (Exception ex1) {
