@@ -1,11 +1,14 @@
 package br.com.hc.groove.bom.services;
 
-import org.modelmapper.ModelMapper;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.hc.groove.bom.models.dtos.UsuarioDTO;
 import br.com.hc.groove.bom.models.entities.Usuario;
+import br.com.hc.groove.bom.repositories.BandaRepository;
 import br.com.hc.groove.bom.repositories.UsuarioRepository;
 import jakarta.persistence.NoResultException;
 import jakarta.validation.Valid;
@@ -16,35 +19,29 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private ModelMapper mapper;
+    private BandaRepository bandaRepository;
+        
+    public List<UsuarioDTO> buscarUsuarioDaBanda(Long bandaId) {
+        return usuarioRepository.findAllByBanda(bandaRepository.findById(bandaId).orElseThrow(NoResultException::new)).stream().map(UsuarioDTO::new).collect(Collectors.toList());
+    }
 
     public UsuarioDTO buscarUsuario(Long usuarioId) throws NoResultException, Exception {
-        return mapper.map(usuarioRepository.findByIdAndAtivoIsTrue(usuarioId).orElseThrow(NoResultException::new), UsuarioDTO.class);
+        return new UsuarioDTO(usuarioRepository.findByIdAndAtivoIsTrue(usuarioId).orElseThrow(NoResultException::new));
     }
 
     public UsuarioDTO criarUsuario(@Valid UsuarioDTO usuario) throws Exception {
-        return mapper.map(usuarioRepository.save(mapper.map(usuario, Usuario.class)), UsuarioDTO.class);
+        return new UsuarioDTO(usuarioRepository.save(new Usuario(usuario)));
     }
 
     public UsuarioDTO alterarUsuario(UsuarioDTO usuario, Long usuarioId) throws NoResultException, Exception {
-        Usuario usuarioOriginal = usuarioRepository.findByIdAndAtivoIsTrue(usuarioId).orElseThrow(NoResultException::new);
+        return new UsuarioDTO(usuarioRepository.save(usuarioRepository.findByIdAndAtivoIsTrue(usuarioId).orElseThrow(NoResultException::new).put(usuario)));
+    }
 
-        if (usuario.descricao() != null) {
-            usuarioOriginal.setDescricao(usuario.descricao());
-        }
-
-        if (usuario.email() != null) {
-            usuarioOriginal.setEmail(usuario.email());
-        }
-
-        if (usuario.especialidade() != null) {
-            usuarioOriginal.setEspecialidade(usuario.especialidade());
-        } 
-
-        if (usuario.nome() != null) {
-            usuarioOriginal.setNome(usuario.nome());
-        }
-
-        return mapper.map(usuarioRepository.save(usuarioOriginal), UsuarioDTO.class);
+    public String desativarUsuario(Long usuarioId) {
+        Usuario usuario = usuarioRepository.findByIdAndAtivoIsTrue(usuarioId).orElseThrow(NoResultException::new);
+        usuario.setAtivo(false);
+        usuarioRepository.save(usuario);
+        
+        return "Usuario desativado com sucesso";
     }
 }

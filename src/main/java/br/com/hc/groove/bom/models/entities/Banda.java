@@ -1,10 +1,12 @@
 package br.com.hc.groove.bom.models.entities;
 
+import br.com.hc.groove.bom.models.dtos.BandaDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,4 +27,16 @@ public class Banda {
 
     @Column(name = "saldo", nullable = true)
     private Double saldo;
+
+    @PrePersist
+    public void create() {
+        this.id = null;
+        this.saldo = 0.00;
+    }
+
+    public Banda(BandaDTO bandaDTO) {
+        this.id = bandaDTO.id();
+        this.nome = bandaDTO.nome();
+        this.saldo = bandaDTO.saldo();
+    }
 }
