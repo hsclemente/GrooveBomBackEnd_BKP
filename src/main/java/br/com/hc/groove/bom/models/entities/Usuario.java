@@ -68,7 +68,7 @@ public class Usuario {
             this.descricao = usuarioDTO.descricao();
         }
 
-        if (usuarioDTO.email() != null) {
+        if (usuarioDTO.email() != null && usuarioDTO.email().matches("(\\S.*\\S)(@)(\\S.*\\S)(.\\S[a-z]{2,3})")) {
             this.email = usuarioDTO.email();
         }
 
