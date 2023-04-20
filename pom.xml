@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>br.com.hc</groupId>
 	<artifactId>groove.bom</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>v1.0</version>
 	<name>groove.bom</name>
-	<description>Demo project for Spring Boot</description>
+	<description>API Backend Groove Bom</description>
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.2</spring-cloud.version>
