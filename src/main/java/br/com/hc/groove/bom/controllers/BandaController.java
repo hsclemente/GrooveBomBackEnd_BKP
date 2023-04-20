@@ -19,10 +19,12 @@ import br.com.hc.groove.bom.domain.models.dtos.BandaDTO;
 import br.com.hc.groove.bom.domain.models.forms.BandaForm;
 import br.com.hc.groove.bom.domain.models.forms.SaldoForm;
 import br.com.hc.groove.bom.services.BandaService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/banda")
+@SecurityRequirement(name = "bearer-key")
 public class BandaController {
     @Autowired
     private BandaService bandaService;

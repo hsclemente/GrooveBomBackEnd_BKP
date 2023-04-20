@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.hc.groove.bom.domain.models.dtos.UsuarioDTO;
@@ -32,7 +33,9 @@ public class UsuarioService {
     }
 
     public UsuarioDTO criarUsuario(@Valid UsuarioForm usuario) {
-        return new UsuarioDTO(usuarioRepository.save(new Usuario(usuario)));
+        Usuario usuarioToSave = new Usuario(usuario);
+        usuarioToSave.setPassword(new BCryptPasswordEncoder().encode(usuarioToSave.getPassword()));
+        return new UsuarioDTO(usuarioRepository.save(usuarioToSave));
     }
 
     public UsuarioDTO alterarUsuario(UsuarioForm usuario, Long usuarioId) {

@@ -16,10 +16,12 @@ import br.com.hc.groove.bom.domain.models.filters.FaqFilter;
 import br.com.hc.groove.bom.domain.models.forms.FaqForm;
 import br.com.hc.groove.bom.domain.models.forms.RespostaForm;
 import br.com.hc.groove.bom.services.FaqService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("faq")
+@SecurityRequirement(name = "bearer-key")
 public class FaqController {
     
     @Autowired

@@ -1,5 +1,12 @@
 package br.com.hc.groove.bom.domain.models.entities;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import br.com.hc.groove.bom.domain.models.forms.UsuarioForm;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "gb_usuarios")
 @AllArgsConstructor@NoArgsConstructor
-public class Usuario {
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = true)
@@ -47,6 +54,9 @@ public class Usuario {
     @JoinColumn(name = "banda")
     private Banda banda;
 
+    @Column(name = "password")
+    private String password;
+
     @PrePersist
     public void create() {
         this.id = null;
@@ -59,6 +69,7 @@ public class Usuario {
         this.descricao = usuarioForm.descricao();
         this.especialidade = usuarioForm.especialidade();
         this.email = usuarioForm.email(); 
+        this.password = usuarioForm.password();
     } 
 
     public Usuario put(UsuarioForm usuarioDTO) {
@@ -78,6 +89,40 @@ public class Usuario {
             this.nome = usuarioDTO.nome();
         }
 
+        if(usuarioDTO.password() != null) {
+            this.password = usuarioDTO.password();
+        }
+
         return this;
     } 
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
 }

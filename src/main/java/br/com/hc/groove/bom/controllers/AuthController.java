@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.hc.groove.bom.domain.models.dtos.JWTToken;
-import br.com.hc.groove.bom.domain.models.entities.AuthUser;
+import br.com.hc.groove.bom.domain.models.entities.Usuario;
 import br.com.hc.groove.bom.domain.models.forms.AuthForm;
 import br.com.hc.groove.bom.services.TokenService;
 import jakarta.validation.Valid;
@@ -26,7 +26,7 @@ public class AuthController {
 
     @PostMapping
     public ResponseEntity<?> authentication(@RequestBody@Valid AuthForm form) {
-        return ResponseEntity.ok(new JWTToken(tokenService.tokenFactory((AuthUser) manager.authenticate(new UsernamePasswordAuthenticationToken(form.username(), form.password())).getPrincipal())));
+        return ResponseEntity.ok(new JWTToken(tokenService.tokenFactory((Usuario) manager.authenticate(new UsernamePasswordAuthenticationToken(form.username(), form.password())).getPrincipal())));
     }
 
 }

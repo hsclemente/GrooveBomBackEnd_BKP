@@ -17,10 +17,12 @@ import br.com.hc.groove.bom.domain.models.dtos.UsuarioDTO;
 import br.com.hc.groove.bom.domain.models.forms.SaldoForm;
 import br.com.hc.groove.bom.domain.models.forms.UsuarioForm;
 import br.com.hc.groove.bom.services.UsuarioService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/usuario")
+@SecurityRequirement(name = "bearer-key")
 public class UsuarioController {
 
     @Autowired
