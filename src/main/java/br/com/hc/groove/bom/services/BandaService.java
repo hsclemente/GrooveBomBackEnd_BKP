@@ -6,11 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import br.com.hc.groove.bom.models.dtos.BandaDTO;
-import br.com.hc.groove.bom.models.dtos.SaldoDTO;
-import br.com.hc.groove.bom.models.entities.Banda;
-import br.com.hc.groove.bom.repositories.BandaRepository;
-import jakarta.persistence.NoResultException;
+import br.com.hc.groove.bom.domain.models.dtos.BandaDTO;
+import br.com.hc.groove.bom.domain.models.entities.Banda;
+import br.com.hc.groove.bom.domain.models.forms.BandaForm;
+import br.com.hc.groove.bom.domain.models.forms.SaldoForm;
+import br.com.hc.groove.bom.domain.repositories.BandaRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 @Service
@@ -19,28 +20,25 @@ public class BandaService {
     @Autowired
     private BandaRepository bandaRepository;
 
-    public Page<BandaDTO> buscarBandas(Pageable paginacao) throws Exception {
+    public Page<BandaDTO> buscarBandas(Pageable paginacao) {
         return bandaRepository.findAll(paginacao).map(BandaDTO::new);
     }
 
-    public BandaDTO criarBanda(BandaDTO banda) throws NoResultException, Exception {
+    public BandaDTO criarBanda(@Valid BandaForm banda) {
         return new BandaDTO(bandaRepository.save(new Banda(banda)));
     }
 
-    public BandaDTO alterarNome(@Valid BandaDTO bandaDTO, Long bandaId) {
-        Banda banda = bandaRepository.findById(bandaId).orElseThrow(NoResultException::new);
-        banda.setNome(bandaDTO.nome());
+    public BandaDTO alterarNome(@Valid BandaForm bandaForm, Long bandaId) {
+        Banda banda = bandaRepository.findById(bandaId).orElseThrow(EntityNotFoundException::new);
+        banda.setNome(bandaForm.nome());
         
         return new BandaDTO(bandaRepository.save(banda));
     }
 
-    public BandaDTO alterarSaldo(SaldoDTO saldo, Long bandaId) throws NoResultException, IllegalArgumentException, Exception {
-        Banda banda = bandaRepository.findById(bandaId).orElseThrow(NoResultException::new);
-        if (saldo.valor() != null && saldo.valor() > 0) {
-            banda.setSaldo(saldo.valor());
-        } else {
-            throw new IllegalArgumentException();
-        }
+    public BandaDTO alterarSaldo(@Valid SaldoForm saldo, Long bandaId) {
+        Banda banda = bandaRepository.findById(bandaId).orElseThrow(EntityNotFoundException::new);
+        banda.setSaldo(saldo.valor());
+        
         return new BandaDTO(bandaRepository.save(banda));
     }
     

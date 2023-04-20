@@ -1,8 +1,8 @@
 spring:
     datasource:
-        url: jdbc:postgresql://localhost:5432/hc-groovebom-test
-        username: postgres
-        password: root
+        url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/hc-groovebom-test}
+        username: ${DATABASE_USERNAME:postgres}
+        password: ${DATABASE_PASSWORD:root}
         driver-class-name: org.postgresql.Driver
     jpa:
         generate-ddl: true
@@ -13,6 +13,11 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
+server:
+    error:
+        include-stacktrace: never
+token:
+    secret: ${JWT_SECRET:root}
 
 
 

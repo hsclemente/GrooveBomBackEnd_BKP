@@ -1,6 +1,6 @@
-package br.com.hc.groove.bom.models.entities;
+package br.com.hc.groove.bom.domain.models.entities;
 
-import br.com.hc.groove.bom.models.dtos.UsuarioDTO;
+import br.com.hc.groove.bom.domain.models.forms.UsuarioForm;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -54,16 +54,14 @@ public class Usuario {
         this.saldo = 0.00;
     }
 
-    public Usuario(UsuarioDTO usuarioDTO) {
-        this.id = usuarioDTO.id();
-        this.nome = usuarioDTO.nome(); 
-        this.descricao = usuarioDTO.descricao();
-        this.especialidade = usuarioDTO.especialidade();
-        this.email = usuarioDTO.email(); 
-        this.saldo = usuarioDTO.saldo();
+    public Usuario(UsuarioForm usuarioForm) {
+        this.nome = usuarioForm.nome(); 
+        this.descricao = usuarioForm.descricao();
+        this.especialidade = usuarioForm.especialidade();
+        this.email = usuarioForm.email(); 
     } 
 
-    public Usuario put(UsuarioDTO usuarioDTO) {
+    public Usuario put(UsuarioForm usuarioDTO) {
         if (usuarioDTO.descricao() != null) {
             this.descricao = usuarioDTO.descricao();
         }

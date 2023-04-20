@@ -1,8 +1,8 @@
-package br.com.hc.groove.bom.repositories;
+package br.com.hc.groove.bom.domain.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.hc.groove.bom.models.entities.Banda;
+import br.com.hc.groove.bom.domain.models.entities.Banda;
 
 public interface BandaRepository extends JpaRepository<Banda, Long>{
 }

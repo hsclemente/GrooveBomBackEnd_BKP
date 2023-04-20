@@ -1,7 +1,8 @@
-package br.com.hc.groove.bom.models.entities;
+package br.com.hc.groove.bom.domain.models.entities;
 
 import java.time.LocalDateTime;
 
+import br.com.hc.groove.bom.domain.models.forms.RespostaForm;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,5 +41,10 @@ public class Resposta {
     @PrePersist
     public void abertura() {
         this.data = LocalDateTime.now();
+    }
+
+    public Resposta(@Valid RespostaForm form, Usuario usuarioResposta) {
+        this.resposta = form.resposta();
+        this.usuarioResposta = usuarioResposta;
     }
 }

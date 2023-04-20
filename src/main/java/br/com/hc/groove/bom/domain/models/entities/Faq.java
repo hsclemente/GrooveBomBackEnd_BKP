@@ -1,8 +1,9 @@
-package br.com.hc.groove.bom.models.entities;
+package br.com.hc.groove.bom.domain.models.entities;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+import br.com.hc.groove.bom.domain.models.forms.FaqForm;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,5 +47,10 @@ public class Faq {
     @PrePersist
     public void abertura() {
         this.data = LocalDateTime.now();
+    }
+
+    public Faq(FaqForm faqForm, Usuario usuario) {
+        this.pergunta = faqForm.pergunta();
+        this.usuarioFaq = usuario;
     }
 }

@@ -1,4 +1,4 @@
-package br.com.hc.groove.bom.repositories;
+package br.com.hc.groove.bom.domain.repositories;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.hc.groove.bom.models.entities.Banda;
-import br.com.hc.groove.bom.models.entities.Usuario;
+import br.com.hc.groove.bom.domain.models.entities.Banda;
+import br.com.hc.groove.bom.domain.models.entities.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByIdAndAtivoIsTrue(Long id);

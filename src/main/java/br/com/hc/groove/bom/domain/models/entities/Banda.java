@@ -1,6 +1,6 @@
-package br.com.hc.groove.bom.models.entities;
+package br.com.hc.groove.bom.domain.models.entities;
 
-import br.com.hc.groove.bom.models.dtos.BandaDTO;
+import br.com.hc.groove.bom.domain.models.forms.BandaForm;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,9 +34,7 @@ public class Banda {
         this.saldo = 0.00;
     }
 
-    public Banda(BandaDTO bandaDTO) {
-        this.id = bandaDTO.id();
-        this.nome = bandaDTO.nome();
-        this.saldo = bandaDTO.saldo();
+    public Banda(BandaForm bandaForm) {
+        this.nome = bandaForm.nome();
     }
 }
