@@ -26,7 +26,23 @@ public class AuthController {
 
     @PostMapping
     public ResponseEntity<?> authentication(@RequestBody@Valid AuthForm form) {
-        return ResponseEntity.ok(new JWTToken(tokenService.tokenFactory((Usuario) manager.authenticate(new UsernamePasswordAuthenticationToken(form.username(), form.password())).getPrincipal())));
+        final Usuario principal = (Usuario) manager.authenticate(new UsernamePasswordAuthenticationToken(form.username(), form.password())).getPrincipal();
+        return ResponseEntity.ok("""
+            {
+                "id" : "%s", 
+                "nome" : "%s",
+                "descricao": "%s",
+                "especialidade" : "%s",
+                "email" : "%s",
+                "idBanda" : "%s",
+                "token" : "%s"
+            }""".formatted(principal.getId(), 
+                           principal.getNome(),
+                           principal.getDescricao(), 
+                           principal.getEspecialidade(),
+                           principal.getEmail(),
+                           principal.getBanda() != null ?  principal.getBanda().getId() : "null",
+                           new JWTToken(tokenService.tokenFactory(principal)
+            )));
     }
-
 }
