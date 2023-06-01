@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import br.com.hc.groove.bom.domain.models.forms.TarefaForm;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @Table(name = "gb_tarefas")
 @AllArgsConstructor@NoArgsConstructor
