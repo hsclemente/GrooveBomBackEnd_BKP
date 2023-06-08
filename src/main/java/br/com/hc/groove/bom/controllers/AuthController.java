@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.hc.groove.bom.domain.models.dtos.JWTToken;
 import br.com.hc.groove.bom.domain.models.entities.Usuario;
 import br.com.hc.groove.bom.domain.models.forms.AuthForm;
 import br.com.hc.groove.bom.services.TokenService;
@@ -29,7 +28,7 @@ public class AuthController {
         final Usuario principal = (Usuario) manager.authenticate(new UsernamePasswordAuthenticationToken(form.username(), form.password())).getPrincipal();
         return ResponseEntity.ok("""
             {
-                "id" : "%s", 
+                "id" : "%s",
                 "nome" : "%s",
                 "descricao": "%s",
                 "especialidade" : "%s",
@@ -42,7 +41,7 @@ public class AuthController {
                            principal.getEspecialidade(),
                            principal.getEmail(),
                            principal.getBanda() != null ?  principal.getBanda().getId() : "null",
-                           new JWTToken(tokenService.tokenFactory(principal)
-            )));
+                           tokenService.tokenFactory(principal)
+            ));
     }
 }
