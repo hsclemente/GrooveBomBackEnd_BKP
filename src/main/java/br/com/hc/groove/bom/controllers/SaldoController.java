@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.hc.groove.bom.domain.models.dtos.SaldoDTO;
 import br.com.hc.groove.bom.domain.models.forms.SaldoForm;
 import br.com.hc.groove.bom.services.SaldoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
