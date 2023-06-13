@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import jakarta.persistence.EntityNotFoundException;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
+
 @RestControllerAdvice
 public class ExceptionAdvice {
     
@@ -59,6 +61,11 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> error500(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " + ex.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(KeyAlreadyExistsException.class)
+    public ResponseEntity<?> error400(KeyAlreadyExistsException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
     private record ValidError(String field, String message) {}
